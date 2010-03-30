@@ -115,7 +115,7 @@ def compare(nmr1, nmr2):
     print "True Negative: ", tn
     print "False Positive: ", fp
     print "Flase Negative: ", fn
-
+    print "Accuracy: ", float(tp)/float(tp+fp)
 
 compare(nmr1, nmr2)
 
