@@ -86,7 +86,30 @@ def compare(nmr1, nmr2):
     fp = 0
     fn = 0
     i = 1
+    begin_dis_seq1 = -1
+    begin_dis_seq2 = -1
+    
+    seq_string1 = ""
+    seq_string2 = ""
+    
     while i <= max(nmr1.get_size(), nmr2.get_size()):
+        if nmr1.is_present(i):
+            if begin_dis_seq1 == -1 and nmr1.is_dis(i):
+                begin_dis_seq1 = i
+        
+            if begin_dis_seq1 <> -1 and not nmr1.is_dis(i):
+                seq_string1 += "MD Disorder interval: " + str(begin_dis_seq1) + " - " + str(i-1) + "\n"
+                begin_dis_seq1 = -1
+                
+        if nmr2.is_present(i):
+            if begin_dis_seq2 == -1 and nmr2.is_dis(i):
+                begin_dis_seq2 = i
+        
+            if begin_dis_seq2 <> -1 and not nmr2.is_dis(i):
+                seq_string2 += "ncSPC Disorder interval: " + str(begin_dis_seq2) + " - " + str(i-1) + "\n"
+                begin_dis_seq2 = -1
+
+    
         if nmr1.is_present(i) and nmr2.is_present(i):
             if nmr1.is_dis(i) and nmr2.is_dis(i):
                 tp += 1
@@ -99,7 +122,12 @@ def compare(nmr1, nmr2):
             else:
                 print "SHIT"
         i += 1    
-
+    
+    if begin_dis_seq1 <> -1: 
+        seq_string1 += "MD Disorder interval: " + str(begin_dis_seq1) + " - " + str(nmr1.get_size()) + "\n"
+    if begin_dis_seq2 <> -1:
+        seq_string2 += "ncSPC Disorder interval: " + str(begin_dis_seq2) + " - " + str(nmr2.get_size()) + "\n"
+    
     data_row = sheet1.row(thr3+1)
     data_row.write(0, thr3)
     
@@ -155,6 +183,11 @@ def compare(nmr1, nmr2):
         coverage_ordered = "N/A"
     print "Coverage Ordered: ", coverage_ordered
     data_row.write(11, coverage_ordered)
+    
+    print seq_string1, seq_string2
+    
+    data_row.write(12, seq_string1)
+    data_row.write(13, seq_string2)
     
     
 if len(sys.argv) <> 5:
