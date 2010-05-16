@@ -209,7 +209,7 @@ header_row.write(1, "Length of Disorder")
 header_row.write(2, "Hits")
 header_row.write(3, "True Positives")
 header_row.write(4, "True Negative")
-header_row.write(5, "False Posotives")
+header_row.write(5, "False Positives")
 header_row.write(6, "False Negatives")
 header_row.write(7, "Accuracy")
 header_row.write(8, "Coverage/TP Rate")
@@ -231,8 +231,7 @@ for th in range(10):
     nmr1.parse1(sys.argv[1])
     
     compare(nmr1, nmr2)
-
-
+    
 
 book.save(protein_num + ".xls")
 book.save(TemporaryFile())
