@@ -31,6 +31,8 @@ def is_disordered1(val):
 class NMR:
     def __init__(self):
         self.data = {}
+        self.score = {}
+        self.le = {}
         self.size = 0
 
     def parse1(self, filename):
@@ -50,10 +52,11 @@ class NMR:
                 # add reliability index weight    
                 ri = int(d[9].strip())
                 score = float(float(val*ri)/9)
-                print num, score
-                
+                #print num, score
+                self.le[num] = d[1].strip()
                 self.add(num, is_disordered1(val))
-        print ""
+                self.add_score(num, ri)
+        #print ""
 
     def parse2(self, filename):
         f = open(filename, "r")
@@ -65,6 +68,7 @@ class NMR:
                 num = int(d[0])
                 val = float(d[1])
                 self.add(num, is_disordered2(val))
+                self.add_score(num, val)
 
 
     # adding number and ordered or disordered
@@ -73,6 +77,18 @@ class NMR:
             raise Exception("duplicate residue number")
         self.data[num] = is_disordered
         self.size = max(self.size, num)
+
+    def add_score(self, num, score):
+        if num in self.score:
+            raise Exception("duplicate residue number")
+        self.score[num] = score
+
+    def get_score(self, num):
+        if not self.is_present(num):
+            raise Exception("no data for this number" + num)
+        return self.score[num]
+    def get_le(self, num):
+        return self.le[num]
 
     def get_size(self):
         return self.size
@@ -127,6 +143,7 @@ def compare(nmr1, nmr2):
     
         if nmr1.is_present(i) and nmr2.is_present(i):
             if nmr1.is_dis(i) and nmr2.is_dis(i):
+                print "%d %s %f %f" % (i, nmr1.get_le(i),  nmr1.get_score(i), nmr2.get_score(i))
                 tp += 1
             elif nmr1.is_dis(i) and not nmr2.is_dis(i):
                 fp += 1
