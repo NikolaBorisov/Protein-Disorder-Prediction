@@ -1,0 +1,10 @@
+Hits:  30
+True Positive:  0
+True Negative:  30
+False Positive:  0
+Flase Negative:  27
+Accuracy: N/A 
+Coverage = TP rate:  0.0
+FP Rate:  0.0
+Accuracy Ordered:  0.526315789474
+Coverage Ordered: N/A 

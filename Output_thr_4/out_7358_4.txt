@@ -1,0 +1,11 @@
+Length of Disorder:  112
+Hits:  119
+True Positive:  82
+True Negative:  37
+False Positive:  34
+Flase Negative:  30
+Accuracy:  0.706896551724
+Coverage = TP rate:  0.732142857143
+FP Rate:  0.478873239437
+Accuracy Ordered:  0.55223880597
+Coverage Ordered:  0.521126760563
